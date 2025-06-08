@@ -1,3 +1,15 @@
-warehouse: COMPUTE_WH
-database: MY_DB
-schema: PUBLIC
+# config/config.yaml
+dev:
+  warehouse: DEV_WH
+  database: DEV_DB
+  schema: PUBLIC
+
+stg:
+  warehouse: STG_WH
+  database: STG_DB
+  schema: PUBLIC
+
+prd:
+  warehouse: PROD_WH
+  database: PROD_DB
+  schema: PUBLIC

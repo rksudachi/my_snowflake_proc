@@ -14,7 +14,7 @@ def business_logic(x: int, y: int) -> int:
 @sproc(
     name="MY_PROC_ADD",
     is_permanent=False,
-    session_parameters={
+    statement_params={
         "QUERY_TAG": "my_proc_add",
     },
 )
@@ -29,11 +29,23 @@ def my_proc(session: Session, x: int, y: int) -> int:
     return result
 
 
-if __name__ == "__main__":
-    # ローカル実行用スタブ（Session は接続不要でテスト用）
-    class DummySession:
-        pass
+def create_session() -> Session:
+    return (
+        Session.builder.config("account", settings.snowflake_account)
+        .config("user", settings.snowflake_user)
+        .config("role", settings.snowflake_role)
+        .config("warehouse", settings.warehouse)
+        .config("database", settings.database)
+        .config("schema", settings.schema)
+        .create()
+    )
 
-    print(settings)
-    res = business_logic(2, 3)
+
+def main():
+    sess = create_session()
+    res = my_proc(sess, 2, 3)
     print("local business_logic result:", res)
+
+
+if __name__ == "__main__":
+    main()

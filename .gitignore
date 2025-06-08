@@ -19,7 +19,7 @@ logs/
 
 # Pytest キャッシュ
 .pytest_cache/
-
+.coverage
 # Snowflake Snowpark ビルド成果物（あれば）
 .dist/
 build/
