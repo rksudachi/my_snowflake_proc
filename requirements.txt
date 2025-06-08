@@ -1,0 +1,7 @@
+snowflake-connector-python
+snowflake-snowpark-python
+python-dotenv
+pyyaml
+pytest
+pytest-mock
+pydantic-settings

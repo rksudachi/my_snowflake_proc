@@ -1,0 +1,3 @@
+warehouse: COMPUTE_WH
+database: MY_DB
+schema: PUBLIC
