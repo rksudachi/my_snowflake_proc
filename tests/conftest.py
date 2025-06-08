@@ -1,4 +1,5 @@
 import os
+from types import SimpleNamespace
 import pytest
 from snowflake.snowpark import Session
 from src.config import settings
@@ -54,4 +55,16 @@ def session():
     pytest_configureで作成された _session を返すだけ。
     フィクスチャ本体の外側で一度だけ初期化済みなので高速です。
     """
+    return _session
+
+
+@pytest.fixture(autouse=True)
+def patch_src_session(monkeypatch):
+    import src
+
+    # session = SimpleNamespace()
+    monkeypatch.setattr(src, "session", _session)
+    monkeypatch.setattr(
+        "src.procedures.my_proc.session", _session, raising=False
+    )
     return _session

@@ -1,6 +1,7 @@
 from snowflake.snowpark import Session
 from snowflake.snowpark.functions import sproc
 from src.config import settings
+from src import session
 from src.logger import get_logger
 
 logger = get_logger(__name__)
@@ -14,6 +15,7 @@ def business_logic(x: int, y: int) -> int:
 @sproc(
     name="MY_PROC_ADD",
     is_permanent=False,
+    session=session,
     statement_params={
         "QUERY_TAG": "my_proc_add",
     },
@@ -29,21 +31,22 @@ def my_proc(session: Session, x: int, y: int) -> int:
     return result
 
 
-def create_session() -> Session:
-    return (
-        Session.builder.config("account", settings.snowflake_account)
-        .config("user", settings.snowflake_user)
-        .config("role", settings.snowflake_role)
-        .config("warehouse", settings.warehouse)
-        .config("database", settings.database)
-        .config("schema", settings.schema)
-        .create()
-    )
+# def create_session() -> Session:
+#     return (
+#         # Session.builder.config("account", settings.snowflake_account)
+#         # .config("user", settings.snowflake_user)
+#         # .config("role", settings.snowflake_role)
+#         # .config("warehouse", settings.warehouse)
+#         # .config("database", settings.database)
+#         # .config("schema", settings.schema)
+#         # .create()
+#         Session.builder.config("local_testing", True).create()
+#     )
 
 
 def main():
-    sess = create_session()
-    res = my_proc(sess, 2, 3)
+    # sess = create_session()
+    res = my_proc(session, 2, 3)
     print("local business_logic result:", res)
 
 
