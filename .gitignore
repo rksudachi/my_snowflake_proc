@@ -8,14 +8,14 @@ __pycache__/
 *$py.class
 
 # 環境変数ファイル
-.env
+# .env
 
 # ログファイル
 logs/
 *.log
 
 # VS Code ワークスペース設定
-.vscode/
+# .vscode/
 
 # Pytest キャッシュ
 .pytest_cache/
